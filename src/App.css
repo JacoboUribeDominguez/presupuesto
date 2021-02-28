@@ -1,0 +1,82 @@
+.App
+{
+  min-height: 100vh;
+  background-color: rgb(29, 29, 29);   
+}
+
+.app-container
+{
+  width:100%;
+}
+
+.row-1
+{
+  width:100%;
+}
+
+.application
+{
+  width:100%;
+  border-radius:5px;
+  background-color: rgb(230, 230, 230);
+}
+
+.title-presupuesto
+{
+  color:rgb(29, 189, 29);
+  user-select: none;
+}
+
+.button-presupuesto
+{
+  width:100%;
+}
+
+.container-presupuestoInicial
+{
+  width:100%;
+}
+
+.presupuestoInicial
+{
+  width:100%; 
+  border-radius:4px;
+  background-color: white;
+}
+
+.gasto-container
+{
+  width:100%;
+  background-color: white;
+  border-radius:5px;
+}
+
+.nombre-container, .presupuesto-container
+{
+  padding:2% 7%;
+  user-select: none;
+}
+
+.nombre-container
+{
+  width:70%;
+}
+
+.presupuesto-container
+{
+  background-color: green;
+  color: white;
+  display:flex;
+  justify-content: center;
+  width:50%;
+  border-radius:5px;
+}
+
+.title-danger
+{
+  color: red;
+  font-size: 15px;
+  text-align: center;
+  text-decoration: underline;
+  user-select: none;
+}
