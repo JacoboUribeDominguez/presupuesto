@@ -5,7 +5,7 @@ import shortid from 'shortid'
 import Error from './error';
 import Gastos from './Gastos';
 
-const ControladorPresupuesto = ({presupuestoGeneral}) => {
+const ControladorPresupuesto = ({presupuestoGeneral, activarNopresupuesto, setActivarNopresupuesto}) => {
 
     let presupuestoRestanteInicial = JSON.parse(localStorage.getItem('presupuestoRestante'));
     if(presupuestoRestanteInicial < 1 || !presupuestoRestanteInicial){
@@ -20,7 +20,7 @@ const ControladorPresupuesto = ({presupuestoGeneral}) => {
     const [presupuestoInicial] = useState(presupuestoGeneral);
     const [presupuestoRestante, setPresupuestoRestante] = useState(presupuestoRestanteInicial);
     const [gasto, setGasto] = useState({
-        id: '',
+        id: shortid.generate(),
         nombre: '',
         presupuesto: 0
     });
@@ -34,6 +34,11 @@ const ControladorPresupuesto = ({presupuestoGeneral}) => {
     const { activo, mensaje } = error;
 
     useEffect(() => {
+        if(presupuestoRestante === 0){
+            setActivarNopresupuesto(true);
+            localStorage.setItem('simuladorPresupuestoGeneral', localStorage.getItem('presupuestoGeneral'));
+            localStorage.setItem('presupuestoGeneral', JSON.stringify(0));
+        }
         localStorage.setItem('presupuestoRestante', JSON.stringify(presupuestoRestante));
         localStorage.setItem('gastos', JSON.stringify(gastos));
     })
@@ -58,15 +63,13 @@ const ControladorPresupuesto = ({presupuestoGeneral}) => {
         }
 
         setError(false);
-        setGasto({
-            ...gasto,
-            id:shortid.generate()
-        })
         setGastos([...gastos, gasto]);
+        setGasto({
+            id: shortid.generate(),
+            nombre: '',
+            presupuesto: 0
+        })
         setPresupuestoRestante(presupuestoRestante - presupuesto);
-        if((presupuestoRestante - presupuesto) === 0){
-            localStorage.setItem('presupuestoGeneral', JSON.stringify(0));
-        }
     }
 
     return ( 
