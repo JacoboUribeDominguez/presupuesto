@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Button } from 'react-bootstrap'
 
 import Error from './error'
@@ -7,6 +7,11 @@ const Presupuesto = ({setPresupuestoGeneral}) => {
 
     const [presupuesto, setPresupuesto] = useState(0);
     const [error, setError] = useState(false);
+
+    useEffect(() => {
+        localStorage.setItem('gastos', JSON.stringify([]));
+        localStorage.setItem('noPresupuesto', JSON.stringify(false));
+    })
 
     const toggleSubmit = (e) => {
         e.preventDefault();

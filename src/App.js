@@ -15,7 +15,7 @@ function App() {
     localStorage.setItem('presupuestoRestante', JSON.stringify(0));
   }
 
-  const [activarNopresupuesto, setActivarNopresupuesto] = useState(false);
+  const [activarNopresupuesto, setActivarNopresupuesto] = useState(JSON.parse(localStorage.getItem('noPresupuesto')));
   const [presupuestoGeneral, setPresupuestoGeneral] = useState(presupuestoInicial);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ function App() {
           <Col lg={8}>
             <div className="application p-4">
               {
-                (!activarNopresupuesto) ? (
+                (!activarNopresupuesto ) ? (
                   (presupuestoGeneral > 0) ? (
                     <ControladorPresupuesto 
                       activarNopresupuesto={activarNopresupuesto} 

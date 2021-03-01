@@ -20,7 +20,7 @@ const ControladorPresupuesto = ({presupuestoGeneral, activarNopresupuesto, setAc
     const [presupuestoInicial] = useState(presupuestoGeneral);
     const [presupuestoRestante, setPresupuestoRestante] = useState(presupuestoRestanteInicial);
     const [gasto, setGasto] = useState({
-        id: '',
+        id: shortid.generate(),
         nombre: '',
         presupuesto: 0
     });
@@ -63,11 +63,12 @@ const ControladorPresupuesto = ({presupuestoGeneral, activarNopresupuesto, setAc
         }
 
         setError(false);
-        setGasto({
-            ...gasto,
-            id:shortid.generate()
-        })
         setGastos([...gastos, gasto]);
+        setGasto({
+            id: shortid.generate(),
+            nombre: '',
+            presupuesto: 0
+        })
         setPresupuestoRestante(presupuestoRestante - presupuesto);
     }
 
