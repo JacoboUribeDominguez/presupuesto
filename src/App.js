@@ -3,6 +3,7 @@ import './App.css';
 import { Row, Col } from 'react-bootstrap';
 import Presupuesto from './components/Presupuesto'
 import ControladorPresupuesto from './components/ControladorPresupuesto'
+import Nopresupuesto from './components/Nopresupuesto';
 
 function App() {
 
@@ -10,18 +11,22 @@ function App() {
 
   if(presupuestoInicial < 1){
     presupuestoInicial = 0;
-    localStorage.setItem('gastos', JSON.stringify(0));
+    //localStorage.setItem('gastos', JSON.stringify(0));
     localStorage.setItem('presupuestoRestante', JSON.stringify(0));
   }
 
-  //helo
-  let vari = 'hello'
-
+  const [activarNopresupuesto, setActivarNopresupuesto] = useState(false);
   const [presupuestoGeneral, setPresupuestoGeneral] = useState(presupuestoInicial);
 
   useEffect(() => {
     localStorage.setItem('presupuestoGeneral', JSON.stringify(presupuestoGeneral));
   }, [presupuestoGeneral])
+
+  useEffect(() => {
+    if(!activarNopresupuesto && presupuestoInicial === 0){
+      setPresupuestoGeneral(0);
+    }
+  }, [activarNopresupuesto])
 
   return (
     <div className="App">
@@ -31,11 +36,21 @@ function App() {
           </Col>
           <Col lg={8}>
             <div className="application p-4">
-              {(presupuestoGeneral < 1) ? ( 
-                <Presupuesto setPresupuestoGeneral={setPresupuestoGeneral} /> 
+              {
+                (!activarNopresupuesto) ? (
+                  (presupuestoGeneral > 0) ? (
+                    <ControladorPresupuesto 
+                      activarNopresupuesto={activarNopresupuesto} 
+                      presupuestoGeneral={presupuestoGeneral} 
+                      setActivarNopresupuesto={setActivarNopresupuesto}/>
+                    
+                  ) : (
+                    <Presupuesto setPresupuestoGeneral={setPresupuestoGeneral} />
+                  )
                 ) : (
-                  <ControladorPresupuesto presupuestoGeneral={presupuestoGeneral}/>
-                )}
+                  <Nopresupuesto setActivarNopresupuesto={setActivarNopresupuesto}/>
+                )
+              }
             </div>
           </Col>
           <Col lg={2}>

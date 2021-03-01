@@ -5,7 +5,7 @@ import shortid from 'shortid'
 import Error from './error';
 import Gastos from './Gastos';
 
-const ControladorPresupuesto = ({presupuestoGeneral}) => {
+const ControladorPresupuesto = ({presupuestoGeneral, activarNopresupuesto, setActivarNopresupuesto}) => {
 
     let presupuestoRestanteInicial = JSON.parse(localStorage.getItem('presupuestoRestante'));
     if(presupuestoRestanteInicial < 1 || !presupuestoRestanteInicial){
@@ -34,6 +34,11 @@ const ControladorPresupuesto = ({presupuestoGeneral}) => {
     const { activo, mensaje } = error;
 
     useEffect(() => {
+        if(presupuestoRestante === 0){
+            setActivarNopresupuesto(true);
+            localStorage.setItem('simuladorPresupuestoGeneral', localStorage.getItem('presupuestoGeneral'));
+            localStorage.setItem('presupuestoGeneral', JSON.stringify(0));
+        }
         localStorage.setItem('presupuestoRestante', JSON.stringify(presupuestoRestante));
         localStorage.setItem('gastos', JSON.stringify(gastos));
     })
@@ -64,9 +69,6 @@ const ControladorPresupuesto = ({presupuestoGeneral}) => {
         })
         setGastos([...gastos, gasto]);
         setPresupuestoRestante(presupuestoRestante - presupuesto);
-        if((presupuestoRestante - presupuesto) === 0){
-            localStorage.setItem('presupuestoGeneral', JSON.stringify(0));
-        }
     }
 
     return ( 
