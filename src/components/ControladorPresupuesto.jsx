@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap';
+import shortid from 'shortid'
 
 import Error from './error';
 import Gastos from './Gastos';
 
 const ControladorPresupuesto = ({presupuestoGeneral}) => {
 
-    const [presupuestoInicial, setPresupuestoInicial] = useState(presupuestoGeneral);
-    const [presupuestoRestante, setPresupuestoRestante] = useState(presupuestoInicial);
+    let presupuestoRestanteInicial = JSON.parse(localStorage.getItem('presupuestoRestante'));
+    if(!presupuestoRestanteInicial){
+        alert('el presupuesto restante no existe o es igual a 0')
+        console.log('pillate el presupuesto', presupuestoRestanteInicial)
+        presupuestoRestanteInicial = presupuestoGeneral;
+    }
+
+    const [presupuestoInicial] = useState(presupuestoGeneral);
+    const [presupuestoRestante, setPresupuestoRestante] = useState(presupuestoRestanteInicial);
     const [gasto, setGasto] = useState({
+        id: '',
         nombre: '',
         presupuesto: 0
     });
@@ -20,6 +29,11 @@ const ControladorPresupuesto = ({presupuestoGeneral}) => {
 
     const { nombre, presupuesto } = gasto;
     const { activo, mensaje } = error;
+
+    useEffect(( ) => {
+        localStorage.setItem('presupuestoRestante', JSON.stringify(presupuestoRestante));
+        console.log('hola ',localStorage.getItem('presupuestoRestante'))
+    }, [])
 
     const toggleSubmit = e => {
         e.preventDefault();
@@ -41,8 +55,16 @@ const ControladorPresupuesto = ({presupuestoGeneral}) => {
         }
 
         setError(false);
+        setGasto({
+            ...gasto,
+            id:shortid.generate()
+        })
         setGastos([...gastos, gasto]);
         setPresupuestoRestante(presupuestoRestante - presupuesto);
+        if((presupuestoRestante - presupuesto) === 0){
+            localStorage.setItem('presupuestoGeneral', JSON.stringify(0))
+            localStorage.setItem('presupuestoRestante', JSON.stringify(0));
+        }
     }
 
     return ( 
@@ -96,7 +118,7 @@ const ControladorPresupuesto = ({presupuestoGeneral}) => {
                 <div className="container-presupuestoInicial d-flex justify-content-center ">
                     <h5 className="title-presupuesto text-left m-2">Presupuesto Restante</h5>
                     <div className="title-presupuesto presupuestoInicial d-flex justify-content-center align-items-center p-2 m-2">
-                        <b>{presupuestoRestante}$</b>
+                        <b>{presupuestoRestanteInicial}$</b>
                     </div>
                 </div>
                 <div className="mt-3">

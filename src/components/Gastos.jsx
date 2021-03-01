@@ -5,9 +5,9 @@ const Gastos = ({gastosData}) => {
         <div>
             {
                 (gastosData.length > 0) ? (
-                    gastosData.map(({nombre, presupuesto}) => 
+                    gastosData.map(({nombre, presupuesto, id}) => 
                         (
-                            <div className="gasto-container d-flex my-4 ">
+                            <div key={id} className="gasto-container d-flex my-4 ">
                                 <div className="nombre-container">
                                     {nombre} 
                                 </div>
