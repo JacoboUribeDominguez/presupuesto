@@ -10,6 +10,8 @@ function App() {
 
   if(presupuestoInicial < 1){
     presupuestoInicial = 0;
+    localStorage.setItem('gastos', JSON.stringify(0));
+    localStorage.setItem('presupuestoRestante', JSON.stringify(0));
   }
 
   const [presupuestoGeneral, setPresupuestoGeneral] = useState(presupuestoInicial);
