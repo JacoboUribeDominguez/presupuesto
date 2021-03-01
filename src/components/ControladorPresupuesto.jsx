@@ -8,10 +8,15 @@ import Gastos from './Gastos';
 const ControladorPresupuesto = ({presupuestoGeneral}) => {
 
     let presupuestoRestanteInicial = JSON.parse(localStorage.getItem('presupuestoRestante'));
-    if(presupuestoRestanteInicial < 1){
+    if(presupuestoRestanteInicial < 1 || !presupuestoRestanteInicial){
         presupuestoRestanteInicial = presupuestoGeneral;
     }
-    let variable = 'var12'
+
+    let gastosIniciales = JSON.parse(localStorage.getItem('gastos'));
+    if(gastosIniciales.length < 1 || !gastosIniciales){
+        gastosIniciales = [];
+    }
+
     const [presupuestoInicial] = useState(presupuestoGeneral);
     const [presupuestoRestante, setPresupuestoRestante] = useState(presupuestoRestanteInicial);
     const [gasto, setGasto] = useState({
@@ -23,13 +28,14 @@ const ControladorPresupuesto = ({presupuestoGeneral}) => {
         mensaje : '',
         activo: false
     });
-    const [gastos, setGastos] = useState([]);
+    const [gastos, setGastos] = useState(gastosIniciales);
 
     const { nombre, presupuesto } = gasto;
     const { activo, mensaje } = error;
 
     useEffect(() => {
         localStorage.setItem('presupuestoRestante', JSON.stringify(presupuestoRestante));
+        localStorage.setItem('gastos', JSON.stringify(gastos));
     })
 
     const toggleSubmit = e => {
@@ -59,8 +65,7 @@ const ControladorPresupuesto = ({presupuestoGeneral}) => {
         setGastos([...gastos, gasto]);
         setPresupuestoRestante(presupuestoRestante - presupuesto);
         if((presupuestoRestante - presupuesto) === 0){
-            localStorage.setItem('presupuestoGeneral', JSON.stringify(0))
-            localStorage.setItem('presupuestoRestante', JSON.stringify(0));
+            localStorage.setItem('presupuestoGeneral', JSON.stringify(0));
         }
     }
 
