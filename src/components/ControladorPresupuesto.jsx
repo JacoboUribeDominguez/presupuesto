@@ -8,9 +8,7 @@ import Gastos from './Gastos';
 const ControladorPresupuesto = ({presupuestoGeneral}) => {
 
     let presupuestoRestanteInicial = JSON.parse(localStorage.getItem('presupuestoRestante'));
-    if(!presupuestoRestanteInicial){
-        alert('el presupuesto restante no existe o es igual a 0')
-        console.log('pillate el presupuesto', presupuestoRestanteInicial)
+    if(presupuestoRestanteInicial < 1){
         presupuestoRestanteInicial = presupuestoGeneral;
     }
 
@@ -30,10 +28,9 @@ const ControladorPresupuesto = ({presupuestoGeneral}) => {
     const { nombre, presupuesto } = gasto;
     const { activo, mensaje } = error;
 
-    useEffect(( ) => {
+    useEffect(() => {
         localStorage.setItem('presupuestoRestante', JSON.stringify(presupuestoRestante));
-        console.log('hola ',localStorage.getItem('presupuestoRestante'))
-    }, [])
+    })
 
     const toggleSubmit = e => {
         e.preventDefault();
@@ -118,7 +115,7 @@ const ControladorPresupuesto = ({presupuestoGeneral}) => {
                 <div className="container-presupuestoInicial d-flex justify-content-center ">
                     <h5 className="title-presupuesto text-left m-2">Presupuesto Restante</h5>
                     <div className="title-presupuesto presupuestoInicial d-flex justify-content-center align-items-center p-2 m-2">
-                        <b>{presupuestoRestanteInicial}$</b>
+                        <b>{presupuestoRestante}$</b>
                     </div>
                 </div>
                 <div className="mt-3">
