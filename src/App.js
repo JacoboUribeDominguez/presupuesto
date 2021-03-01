@@ -14,6 +14,9 @@ function App() {
     localStorage.setItem('presupuestoRestante', JSON.stringify(0));
   }
 
+  //helo
+  let vari = 'hello'
+
   const [presupuestoGeneral, setPresupuestoGeneral] = useState(presupuestoInicial);
 
   useEffect(() => {
