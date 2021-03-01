@@ -11,7 +11,7 @@ const ControladorPresupuesto = ({presupuestoGeneral}) => {
     if(presupuestoRestanteInicial < 1){
         presupuestoRestanteInicial = presupuestoGeneral;
     }
-    let variable = 'var2'
+    let variable = 'var3'
     const [presupuestoInicial] = useState(presupuestoGeneral);
     const [presupuestoRestante, setPresupuestoRestante] = useState(presupuestoRestanteInicial);
     const [gasto, setGasto] = useState({
