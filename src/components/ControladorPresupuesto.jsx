@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap';
 import shortid from 'shortid'
 
+import { helpers } from '../helpers/helpers'
 import Error from './error';
 import Gastos from './Gastos';
 
@@ -39,8 +40,8 @@ const ControladorPresupuesto = ({presupuestoGeneral, activarNopresupuesto, setAc
             localStorage.setItem('simuladorPresupuestoGeneral', localStorage.getItem('presupuestoGeneral'));
             localStorage.setItem('presupuestoGeneral', JSON.stringify(0));
         }
-        localStorage.setItem('presupuestoRestante', JSON.stringify(presupuestoRestante));
         localStorage.setItem('gastos', JSON.stringify(gastos));
+        localStorage.setItem('presupuestoRestante', JSON.stringify(presupuestoRestante));
     })
 
     const toggleSubmit = e => {
@@ -70,6 +71,7 @@ const ControladorPresupuesto = ({presupuestoGeneral, activarNopresupuesto, setAc
             presupuesto: 0
         })
         setPresupuestoRestante(presupuestoRestante - presupuesto);
+        localStorage.setItem('presupuestoRestante', JSON.stringify(presupuestoRestante-presupuesto));
     }
 
     return ( 
@@ -116,13 +118,13 @@ const ControladorPresupuesto = ({presupuestoGeneral, activarNopresupuesto, setAc
             <Col xs={12} lg={5} className="mb-4">
                 <div className="container-presupuestoInicial d-flex justify-content-center py-4">
                     <h5 className="title-presupuesto text-left mx-2">Presupuesto Inicial</h5>
-                    <div className="title-presupuesto presupuestoInicial d-flex justify-content-center align-items-center p-2 m-2">
+                    <div className="title-presupuesto presupuestoInicial bg-presupuestoInicial d-flex justify-content-center align-items-center p-2 m-2">
                         <b>{presupuestoInicial}$</b>
                     </div>
                 </div>
                 <div className="container-presupuestoInicial d-flex justify-content-center ">
                     <h5 className="title-presupuesto text-left m-2">Presupuesto Restante</h5>
-                    <div className="title-presupuesto presupuestoInicial d-flex justify-content-center align-items-center p-2 m-2">
+                    <div className={helpers(JSON.parse(localStorage.getItem('presupuestoGeneral')), JSON.parse(localStorage.getItem('presupuestoRestante')), 'title-presupuesto presupuestoInicial d-flex justify-content-center align-items-center p-2 m-2 ')}>
                         <b>{presupuestoRestante}$</b>
                     </div>
                 </div>

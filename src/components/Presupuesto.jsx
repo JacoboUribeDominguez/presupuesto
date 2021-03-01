@@ -13,6 +13,11 @@ const Presupuesto = ({setPresupuestoGeneral}) => {
         localStorage.setItem('noPresupuesto', JSON.stringify(false));
     })
 
+    useEffect(() => {
+        localStorage.setItem('presupuestoGeneral', JSON.stringify(presupuesto));
+        localStorage.setItem('presupuestoRestante', JSON.stringify(presupuesto));
+    }, [presupuesto] )
+
     const toggleSubmit = (e) => {
         e.preventDefault();
         if(presupuesto < 1){
