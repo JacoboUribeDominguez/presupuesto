@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Button } from 'react-bootstrap';
+import PropTypes from 'prop-types'
 import shortid from 'shortid'
+
+import { Row, Col, Form, Button } from 'react-bootstrap';
 
 import { helpers } from '../helpers/helpers'
 import Error from './error';
 import Gastos from './Gastos';
 
-const ControladorPresupuesto = ({presupuestoGeneral, activarNopresupuesto, setActivarNopresupuesto}) => {
+const ControladorPresupuesto = ({presupuestoGeneral, setActivarNopresupuesto}) => {
 
     let presupuestoRestanteInicial = JSON.parse(localStorage.getItem('presupuestoRestante'));
     if(presupuestoRestanteInicial < 1 || !presupuestoRestanteInicial){
@@ -137,6 +139,11 @@ const ControladorPresupuesto = ({presupuestoGeneral, activarNopresupuesto, setAc
             </Col>
         </Row>
     );
+}
+
+ControladorPresupuesto.propTypes = {
+    presupuestoGeneral : PropTypes.string.isRequired,
+    setActivarNopresupuesto : PropTypes.func.isRequired
 }
  
 export default ControladorPresupuesto;

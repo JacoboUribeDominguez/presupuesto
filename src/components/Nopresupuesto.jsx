@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+
 import { Button, Row, Col } from 'react-bootstrap';
 
 const Nopresupuesto = ({setActivarNopresupuesto}) => {
@@ -61,6 +63,10 @@ const Nopresupuesto = ({setActivarNopresupuesto}) => {
             }
         </>
     )
+}
+
+Nopresupuesto.propTypes = {
+    setActivarNopresupuesto : PropTypes.func.isRequired
 }
 
 export default Nopresupuesto
